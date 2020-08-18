@@ -1,0 +1,7 @@
+<?php
+
+return [
+    'issuer' => 'partner',
+    'key' => 'my-secret-key',
+    'endpoint' => 'https://sso.uat.ewallet.com.au/v3/auth'
+];

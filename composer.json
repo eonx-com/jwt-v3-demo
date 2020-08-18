@@ -1,0 +1,8 @@
+{
+    "require": {
+        "lcobucci/jwt": "^3.3",
+        "fzaninotto/faker": "^1.9",
+        "nesbot/carbon": "^2.38",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}
