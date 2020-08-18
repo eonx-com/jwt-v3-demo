@@ -1,4 +1,4 @@
-#JWT v3 Demo
+# JWT v3 Demo
 
 ## Intro
 This is a simple demonstration of generating and logging in to EonX rewards using a JWT v3.  This code is not production ready and is for testing purposes only.
