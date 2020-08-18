@@ -1,8 +1,11 @@
 <?php
 
-require_once ('../vendor/autoload.php');
+use Carbon\Carbon;
 
-$config = (require ('../config.php'));
+require_once('../vendor/autoload.php');
+
+
+$config = (require('../config.php'));
 
 // create random User and Address claims.
 $faker = Faker\Factory::create();
@@ -10,7 +13,7 @@ $user = [
     'first_name' => $faker->firstName,
     'last_name' => $faker->lastName,
     'email' => $faker->email,
-    'mobile' => $faker->regexify('04\d{10}'),
+    'mobile' => $faker->regexify('04\d{8}'),
 ];
 $address = [
     "first_name" => $user['first_name'],
@@ -23,7 +26,6 @@ $address = [
 ];
 
 // build and sign token
-$now = \Carbon\Carbon::now();
 $key = new \Lcobucci\JWT\Signer\Key($config['key']);
 $signer = new \Lcobucci\JWT\Signer\Hmac\Sha256();
 $builder = new \Lcobucci\JWT\Builder();
@@ -32,9 +34,9 @@ $token = $builder
     ->identifiedBy($faker->uuid)
     ->permittedFor('https://sso.ewallet.com.au/auth')
     ->issuedBy($config['issuer'])
-    ->issuedAt($now->getTimestamp())
-    ->expiresAt($now->addMinute()->getTimestamp())
-    ->canOnlyBeUsedAfter($now->getTimestamp())
+    ->issuedAt(Carbon::now()->getTimestamp())
+    ->expiresAt(Carbon::now()->addMinute()->getTimestamp())
+    ->canOnlyBeUsedAfter(Carbon::now()->getTimestamp())
     ->withClaim('ver', '3.0')
     ->withClaim('https://rewards.eonx.com/user', $user)
     ->withClaim('https://rewards.eonx.com/user/address', $address)
