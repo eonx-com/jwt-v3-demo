@@ -19,7 +19,7 @@ docker build . -t jwt-v3-demo
 update config.php with supplied credentials
 
 ```shell script
-docker run --rm -v $(pwd)/config.php:/var/www/config.php -p 8080:8000 jwt-v3-demo
+docker run -it --rm -v $(pwd)/config.php:/var/www/config.php -p 8080:8000 jwt-v3-demo
 ```
  
 Visit `localhost:8080` in your favourite browser and click "Login".
