@@ -4,7 +4,6 @@ use Carbon\Carbon;
 
 require_once('../vendor/autoload.php');
 
-
 $config = (require('../config.php'));
 
 // create random User and Address claims.
@@ -42,13 +41,28 @@ $token = $builder
     ->withClaim('https://rewards.eonx.com/user/address', $address)
     ->getToken($signer, $key);
 
-error_log((string)$token);
+$request = ['authToken' => (string)$token];
+error_log(print_r($request, true));
 
 // send token to AuthEndpoint
 $client = new \GuzzleHttp\Client();
 $response = $client->post($config['endpoint'], [
-    'json' => ['authToken' => (string)$token]
+    'json' => $request
 ]);
 
+$data = json_decode((string)$response->getBody(), true);
 
+error_log(print_r($data, true));
+
+$target = sprintf('%s?%s',
+    $data['data']['target'],
+    http_build_query(
+        ['accessToken' => $data['data']['accessToken']]
+    )
+);
+
+error_log($target);
+
+http_response_code(302);
+header(sprintf('Location: %s', $target));
 
