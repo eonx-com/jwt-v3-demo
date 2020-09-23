@@ -31,7 +31,7 @@ $builder = new \Lcobucci\JWT\Builder();
 $token = $builder
     ->relatedTo($faker->uuid)
     ->identifiedBy($faker->uuid)
-    ->permittedFor('https://sso.ewallet.com.au/auth')
+    ->permittedFor('https://sso.ewallet.com.au/v3/auth')
     ->issuedBy($config['issuer'])
     ->issuedAt(Carbon::now()->getTimestamp())
     ->expiresAt(Carbon::now()->addMinute()->getTimestamp())
