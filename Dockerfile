@@ -1,21 +1,13 @@
-FROM php AS composer
+FROM php:7.4-alpine AS composer
 
-RUN apt-get update; \
-    # Install APT repository packages
-    apt-get install -y --no-install-recommends \
-        git \
-        curl \
-        unzip; \
-    rm -rf /var/lib/apt/lists/*;
+RUN apk add \
+      git \
+      curl \
+      unzip;
 
-COPY ./docker/composer/install.sh /tmp/composer/install.sh
+COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
 
-RUN chmod +x /tmp/composer/install.sh; \
-    /tmp/composer/install.sh; \
-    ls -l /tmp/composer; \
-    mv composer.phar /usr/local/bin/composer; \
-    rm /tmp/composer/install.sh; \
-    chmod +x /usr/local/bin/composer; \
+RUN chmod +x /usr/local/bin/composer; \
     /usr/local/bin/composer --version; \
     /usr/local/bin/composer global require hirak/prestissimo -n
 
